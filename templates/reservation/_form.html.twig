@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button  class="btn btn-success">{{ button_label|default('Save') }}</button>
+     <a href="{{ path('reservation_index') }}"style="margin-left:10px"><i class='fas fa-undo'></i></a>
+{{ form_end(form) }}

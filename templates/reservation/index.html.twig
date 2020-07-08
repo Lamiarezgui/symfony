@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block title%} Liste des Reservations{% endblock %}
+{% block body %}
+{{ form_start(form) }}
+
+<div class="form-row align-items-end" >
+ <div class="col">
+   {{ form_row (form.etat) }}
+ </div>
+
+  <div class="col">
+   <div class="form-group">
+      <button type="submit" class="btn btn-success">Rechercher</button>
+    </div>
+ </div>
+</div>
+ {{ form_end(form) }}
+{% if reservations %}
+    <table id="reservations" class="table table-striped">
+    
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date Reservation</th>
+                <th>Etat</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.dateR ? reservation.dateR|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ reservation.etat }}</td>
+                <td>{{ reservation.idCli.nom }}</td>
+                <td>{{ reservation.idService.libelle }}</td>
+                <td>
+                    <a href="{{ path('reservation_show', {'id': reservation.id}) }}"><i class="fa fa-plus-square"></i></a>
+                    <a href="{{ path('reservation_edit', {'id': reservation.id}) }}"><i class='fas fa-edit'> </i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  {% else %}
+    <p>Aucun Reservation</p>
+  {% endif %} 
+    <a href="{{ path('reservation_new') }}"><i class='fas fa-pen-alt'></i> Create new</a>
+{% endblock %}
